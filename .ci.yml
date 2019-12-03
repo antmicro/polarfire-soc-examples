@@ -1,0 +1,26 @@
+image: ubuntu
+
+build-and-deploy:
+  script:
+    - uname -a
+    - apt update
+    - apt install -y wget build-essential gcc-multilib
+    - wget http://antmicro.com/projects/renode/toolchains/riscv-unknown-elf-gcc-softconsole-6.1.tar.gz -O riscv-unknown-elf-gcc-softconsole.tar.gz
+    - tar -xf riscv-unknown-elf-gcc-softconsole.tar.gz
+    - cp -R riscv-unknown-elf-gcc/ /opt/
+    - export PATH=$PATH:/opt/riscv-unknown-elf-gcc/bin
+    - mkdir artifacts
+    - cd pse-blinky/Debug/
+    - make
+    - cp pse-blinky.elf ../../artifacts
+    - cd ../../pse-freertos-lwip/Debug/
+    - make
+    - cp pse-freertos-lwip.elf ../../artifacts
+    - cd ../../pse-mustein-julia/Debug/
+    - make
+    - cp pse-mustein-julia.elf ../../artifacts
+    - cd ../.. && ls artifacts/
+
+  artifacts:
+    paths:
+      - artifacts/
