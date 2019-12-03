@@ -1,0 +1,20 @@
+/*
+ * Copyright 2019 Microchip Corporation.
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ */
+
+
+#include "drivers/mss_uart/mss_uart.h"
+
+/*
+ * This allows the printf to use MSS_UART, but can't be invoked before
+ * initialising the MSS_UART peripheral, make sure to configure the MSS
+ * properly before invoking printf.
+ * Use g_mss_uart0_lo for MMUART0
+ */
+void _putchar(char character)
+{
+    MSS_UART_polled_tx(&<UART_OUTPUT>, &character, 1);
+}

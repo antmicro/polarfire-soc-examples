@@ -1,0 +1,24 @@
+:name: PolarFire SoC
+:description: This is a sample script prepared to create a PolarFire SoC platform
+
+include $CSD/scripts/polarfire-soc-multiple-servers-base.resc
+
+
+# SoftConsole 6.1 has bundled MusteinGenericGPU model, do not include its sources again
+# SoftConsole 6.0 only Linux is supported and you have to uncomment the line 
+# below, change the path to your workspace and add the polarfire-soc-multiple-servers-base.resc 
+# parent platform to the 6.0
+#include $CWD/../../extras/workspace.examples/pse-mustein-julia/renode/models/MusteinGenericGPU.cs
+
+
+machine LoadPlatformDescriptionFromString "mustein: Video.MusteinGenericGPU @ sysbus 0x10100000 { frameBufferSize: 0x100000; registers64bitAligned: true }"
+showAnalyzer sysbus.mustein
+logLevel -1 sysbus.mustein
+
+
+# Disabling the harts 2-4 as for this demo are not needed, and they would consume resources on the host 
+sysbus.u54_2 IsHalted true
+sysbus.u54_3 IsHalted true
+sysbus.u54_4 IsHalted true
+
+runMacro $ReadyForGdb
