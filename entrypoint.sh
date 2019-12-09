@@ -12,3 +12,5 @@ cd ../../pse-mustein-julia/Debug/
 make
 cp pse-mustein-julia.elf ../../artifacts
 cd ../.. && ls artifacts/
+
+renode --disable-xwt test.py

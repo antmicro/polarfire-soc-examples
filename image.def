@@ -6,19 +6,22 @@ From: ubuntu:18.04
 
 %post
     apt update
-    apt install -y gnupg wget git unzip tar curl locales language-pack-en && export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && locale-gen en_US.UTF-8
-    apt install -y wget build-essential gcc-multilib
-    wget http://antmicro.com/projects/renode/toolchains/riscv-unknown-elf-gcc-softconsole-6.1.tar.gz -O riscv-unknown-elf-gcc-softconsole.tar.gz
-    tar -xf riscv-unknown-elf-gcc-softconsole.tar.gz
-    cp -R riscv-unknown-elf-gcc/ /opt/
+    apt install -y gnupg
 
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
     apt install -y apt-transport-https ca-certificates
     echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial/snapshots/5.8.0 main" | tee /etc/apt/sources.list.d/mono-official-stable.list
+
     apt update
+    apt install -y gnupg wget git unzip tar curl locales language-pack-en && export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && locale-gen en_US.UTF-8
+    apt install -y wget build-essential gcc-multilib
     apt install -y mono-devel
 
     mkdir -p /opt
+
+    wget http://antmicro.com/projects/renode/toolchains/riscv-unknown-elf-gcc-softconsole-6.1.tar.gz -O riscv-unknown-elf-gcc-softconsole.tar.gz
+    tar -xf riscv-unknown-elf-gcc-softconsole.tar.gz
+    cp -R riscv-unknown-elf-gcc/ /opt/
 
     wget https://antmicro.com/projects/renode/builds/renode_1.8.1+20191016gitd7decc9_amd64.deb
     apt install -y ./renode_1.8.1+*_amd64.deb
@@ -27,4 +30,5 @@ From: ubuntu:18.04
     if [ "$#" -eq 1 ]; then
         cd $1
     fi
+
     exec ./entrypoint.sh
