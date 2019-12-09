@@ -9,17 +9,7 @@ build-and-deploy:
     - tar -xf riscv-unknown-elf-gcc-softconsole.tar.gz
     - cp -R riscv-unknown-elf-gcc/ /opt/
     - export PATH=$PATH:/opt/riscv-unknown-elf-gcc/bin
-    - mkdir artifacts
-    - cd pse-blinky/Debug/
-    - make
-    - cp pse-blinky.elf ../../artifacts
-    - cd ../../pse-freertos-lwip/Debug/
-    - make
-    - cp pse-freertos-lwip.elf ../../artifacts
-    - cd ../../pse-mustein-julia/Debug/
-    - make
-    - cp pse-mustein-julia.elf ../../artifacts
-    - cd ../.. && ls artifacts/
+    - ./entrypoint.sh
 
   artifacts:
     paths:
